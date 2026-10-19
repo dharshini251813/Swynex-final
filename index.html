@@ -1,0 +1,871 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffe8f0">
+<title>For My Anna ❤️ | From Dharshini</title>
+
+<style>
+:root {
+    --pink: #ff719d;
+    --deep-pink: #dc477c;
+    --purple: #75415f;
+    --cream: #fffaf8;
+    --light-pink: #ffe8f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--purple);
+    background:
+        radial-gradient(circle at top left, #fff5f7, transparent 45%),
+        linear-gradient(145deg, #ffe3ed, #f5e8ff, #fff1e7);
+    text-align: center;
+    overflow-x: hidden;
+}
+
+button {
+    font: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible {
+    outline: 3px solid #9b3f70;
+    outline-offset: 4px;
+}
+
+#heartLayer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.floating-heart {
+    position: absolute;
+    bottom: -50px;
+    opacity: 0;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(.7);
+        opacity: 0;
+    }
+    15% {
+        opacity: .75;
+    }
+    100% {
+        transform: translateY(-115vh) rotate(35deg) scale(1.2);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+@keyframes flapOpen {
+    to {
+        transform: rotateX(180deg);
+        z-index: 0;
+    }
+}
+
+@keyframes letterRise {
+    to {
+        transform: translateY(-85px);
+    }
+}
+
+.screen {
+    display: none;
+    min-height: 100svh;
+    width: 100%;
+    padding: 36px 18px;
+    position: relative;
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.screen.active {
+    display: flex;
+    animation: fadeIn .8s ease both;
+}
+
+h1 {
+    color: var(--deep-pink);
+    font-size: clamp(2.2rem, 8vw, 3.7rem);
+    line-height: 1.2;
+    margin-bottom: 18px;
+}
+
+h2 {
+    font-size: clamp(1.6rem, 6vw, 2.3rem);
+    margin-bottom: 18px;
+    color: var(--deep-pink);
+}
+
+p {
+    font-size: 1.04rem;
+    line-height: 1.9;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    max-width: 460px;
+    margin: 0 auto 20px;
+}
+
+.small {
+    font-size: .88rem;
+    opacity: .8;
+    margin-top: 12px;
+}
+
+.btn {
+    display: inline-block;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 24px;
+    margin: 10px 4px;
+    color: white;
+    background: linear-gradient(135deg, #ff82a8, #d94b84);
+    box-shadow: 0 8px 20px #d94b842d;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px #d94b8440;
+}
+
+.btn:active {
+    transform: scale(.97);
+}
+
+.btn.secondary {
+    color: var(--deep-pink);
+    background: #fff;
+    border: 1px solid #ffc5d7;
+    box-shadow: none;
+}
+
+.music-control {
+    position: fixed;
+    right: 14px;
+    top: 14px;
+    z-index: 10;
+    background: #ffffffdf;
+    color: var(--deep-pink);
+    border: 1px solid #ffc6d8;
+    padding: 10px 14px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: .85rem;
+}
+
+.eyebrow {
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: .75rem;
+    margin-bottom: 18px;
+    color: #a65d7c;
+}
+
+.big-heart {
+    font-size: 4rem;
+    display: inline-block;
+    animation: heartbeat 1.6s infinite;
+    margin-bottom: 20px;
+}
+
+/* Envelope */
+
+.envelope-area {
+    position: relative;
+    width: min(320px, 85vw);
+    height: 220px;
+    margin: 28px auto 18px;
+    perspective: 900px;
+}
+
+.envelope {
+    position: absolute;
+    inset: 42px 0 0;
+    background: #f49bb8;
+    border-radius: 5px;
+    box-shadow: 0 16px 35px #b84d7730;
+}
+
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    background: #e985a7;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.envelope-front {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: #f7b0c6;
+    clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+}
+
+.envelope-flap {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 140px;
+    z-index: 4;
+    background: #ffcada;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top;
+    transition: transform .8s ease;
+}
+
+.mini-letter {
+    position: absolute;
+    left: 8%;
+    width: 84%;
+    height: 155px;
+    bottom: 10px;
+    z-index: 2;
+    background: var(--cream);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--deep-pink);
+    font-size: 1.35rem;
+    transition: transform .8s ease .25s;
+}
+
+.seal {
+    position: absolute;
+    left: 50%;
+    top: 95px;
+    transform: translateX(-50%);
+    z-index: 5;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: white;
+    background: #e65083;
+    box-shadow: 0 3px 10px #9d285444;
+    transition: opacity .3s;
+}
+
+.envelope-area.open .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+.envelope-area.open .mini-letter {
+    transform: translateY(-85px);
+}
+
+.envelope-area.open .seal {
+    opacity: 0;
+}
+
+/* Letter */
+
+.letter-card {
+    width: min(600px, 100%);
+    padding: clamp(23px, 6vw, 42px);
+    background: #fffdfb;
+    border: 1px solid #f7d6e0;
+    border-radius: 18px;
+    box-shadow: 0 18px 55px #aa52751b;
+    text-align: left;
+    position: relative;
+}
+
+.letter-card::before {
+    content: "♥";
+    position: absolute;
+    top: 12px;
+    right: 17px;
+    font-size: 1.4rem;
+    color: #ffb4cc;
+}
+
+.letter-card p {
+    margin-bottom: 17px;
+}
+
+.letter-card .greeting {
+    color: var(--deep-pink);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.signature {
+    text-align: right;
+    color: var(--deep-pink);
+    font-size: 1.2rem;
+    margin-top: 28px;
+}
+
+.highlight {
+    color: var(--deep-pink);
+    font-weight: bold;
+}
+
+/* Interactive cards */
+
+.surprise-card {
+    width: min(440px, 100%);
+    padding: 30px 22px;
+    background: #ffffffd9;
+    border: 1px solid #f8cddd;
+    border-radius: 22px;
+    box-shadow: 0 15px 40px #ad57751b;
+    animation: fadeIn .8s ease;
+}
+
+.gift {
+    font-size: 4.5rem;
+    margin: 18px 0;
+    display: inline-block;
+    transition: transform .5s;
+}
+
+.gift.revealed {
+    transform: rotate(10deg) scale(1.15);
+}
+
+.hidden-message {
+    display: none;
+    margin-top: 18px;
+    animation: fadeIn .7s ease;
+}
+
+.hidden-message.show {
+    display: block;
+}
+
+.final-note {
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.footer {
+    font-size: .82rem;
+    margin-top: 25px;
+    opacity: .7;
+}
+
+@media (max-width: 480px) {
+    .screen {
+        padding: 65px 16px 28px;
+    }
+
+    .letter-card {
+        padding: 27px 21px;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    .envelope-area {
+        transform: scale(.93);
+        margin-top: 12px;
+        margin-bottom: 10px;
+    }
+
+    .music-control {
+        top: 9px;
+        right: 9px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="heartLayer" aria-hidden="true"></div>
+
+<button class="music-control" id="musicButton"
+        type="button" aria-pressed="false">
+    ♫ Music: Off
+</button>
+
+<!-- SCREEN 1: OPENING -->
+<section class="screen active" id="screen1">
+    <div class="eyebrow">A little surprise from my heart</div>
+
+    <div class="big-heart">💗</div>
+
+    <h1>For My Anna</h1>
+
+    <p class="subtitle">
+        Some people enter our lives without sharing our blood,
+        yet somehow become family.
+    </p>
+
+    <div class="envelope-area" id="envelope">
+        <div class="envelope">
+            <div class="envelope-back"></div>
+            <div class="mini-letter">For My Anna ❤️</div>
+            <div class="envelope-front"></div>
+            <div class="envelope-flap"></div>
+            <div class="seal">♥</div>
+        </div>
+    </div>
+
+    <p>Anna, this little letter is just for you.</p>
+
+    <button class="btn" id="openLetter" type="button">
+        Open Your Letter 💌
+    </button>
+
+    <p class="small">Take a moment. There is something I want to say.</p>
+</section>
+
+<!-- SCREEN 2: HEARTFELT LETTER -->
+<section class="screen" id="screen2">
+    <div class="eyebrow">From my heart to yours</div>
+
+    <h2>A Letter for My Anna 💌</h2>
+
+    <article class="letter-card">
+        <p class="greeting">Dear Anna, ❤️</p>
+
+        <p>
+            I don't really know where to begin, because when it comes
+            to thanking you, words never seem enough.
+        </p>
+
+        <p>
+            You are not my brother by blood, but that doesn't make
+            the bond we share any less meaningful to me. Sometimes,
+            family isn't just about being born into the same home.
+            Sometimes, it is about the people who come into our lives
+            and slowly earn a special place in our hearts.
+        </p>
+
+        <p>
+            And you have your own special place in mine.
+        </p>
+
+        <p>
+            Thank you for being a part of my life. Thank you for
+            every little thing you have done, every moment of care,
+            every bit of support, and every time your presence has
+            meant more to me than I could explain.
+        </p>
+
+        <p>
+            Maybe I haven't thanked you properly. Maybe I don't always
+            express what I feel. But please don't think that means
+            I don't value you. Some feelings are so genuine that
+            putting them into words feels impossible.
+        </p>
+
+        <p>
+            To me, you are not just someone I call Anna. You are
+            someone I am genuinely grateful to have met. I respect
+            you, I value our bond, and I hope life gives you all the
+            happiness, peace, success, and love that you deserve.
+        </p>
+
+        <p>
+            No matter how busy life gets or how much things change,
+            I will always be thankful that our paths crossed.
+            Being family by heart is special in its own way,
+            and I never want to take that for granted.
+        </p>
+
+        <p>
+            I cannot explain everything in words, Anna. So, for now,
+            let these simple words say what my heart wants you to know:
+        </p>
+
+        <p class="highlight">
+            Thank you for everything. Thank you for being my Anna.
+            I am genuinely grateful for you. ❤️
+        </p>
+
+        <div class="signature">
+            With love and respect,<br>
+            Your little sister,<br>
+            <strong>Dharshini 💗</strong>
+        </div>
+    </article>
+
+    <button class="btn" id="toSurprise" type="button">
+        There's One More Thing... 🎁
+    </button>
+</section>
+
+<!-- SCREEN 3: INTERACTIVE SURPRISE -->
+<section class="screen" id="screen3">
+    <div class="eyebrow">One little thing to remember</div>
+
+    <h2>Anna, This Is for You 💝</h2>
+
+    <div class="surprise-card">
+        <p>
+            I can't put every feeling into a letter.
+            So I have one little surprise left.
+        </p>
+
+        <div class="gift" id="gift">🎁</div>
+
+        <p>Are you ready, Anna?</p>
+
+        <button class="btn" id="revealButton" type="button">
+            Tap to Reveal ❤️
+        </button>
+
+        <div class="hidden-message" id="hiddenMessage">
+            <h2>You're Family to Me. 🫂</h2>
+
+            <p>
+                Not because we share the same blood,
+                but because our bond means something to me.
+            </p>
+
+            <p style="margin-top: 14px;">
+                Thank you for being a part of my story, Anna.
+                I may not say it every day, but I truly appreciate you.
+            </p>
+
+            <p class="highlight" style="margin-top: 16px;">
+                A brother by heart. A bond to be grateful for. ❤️
+            </p>
+
+            <button class="btn" id="toFinal" type="button">
+                One Last Message 💌
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- SCREEN 4: FINAL MESSAGE -->
+<section class="screen" id="screen4">
+    <div class="big-heart">❤️</div>
+
+    <div class="eyebrow">Just one last thing</div>
+
+    <h1>Thank You, Anna!</h1>
+
+    <div class="final-note">
+        <p>
+            If I could give you one thing, it would be the chance
+            to see yourself through my eyes, just for a moment.
+            Maybe then you would understand how much I value you
+            and how thankful I am that I got to know you.
+        </p>
+
+        <p style="margin-top: 20px;">
+            I don't need a special occasion to say thank you.
+            I just wanted you to know that your place in my life
+            matters to me.
+        </p>
+
+        <p class="highlight" style="margin-top: 22px;">
+            You may not be my brother by blood,
+            but you will always be my Anna by heart. ❤️
+        </p>
+
+        <p style="margin-top: 22px;">
+            Stay happy. Keep smiling. Take care of yourself.
+            And never forget that someone is grateful to have
+            you in their life.
+        </p>
+    </div>
+
+    <h2 style="margin-top: 30px;">With lots of love, Dharshini 💗</h2>
+
+    <p class="small">This little website was made just for you, Anna.</p>
+
+    <button class="btn" id="againButton" type="button">
+        Read My Letter Again 💌
+    </button>
+
+    <p class="footer">A bond chosen by the heart. Always appreciated.</p>
+</section>
+
+<script>
+/* Screen navigation */
+
+const screens = [
+    document.getElementById("screen1"),
+    document.getElementById("screen2"),
+    document.getElementById("screen3"),
+    document.getElementById("screen4")
+];
+
+function showScreen(index) {
+    screens.forEach((screen, i) => {
+        screen.classList.toggle("active", i === index);
+    });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* Open the envelope */
+
+const envelope = document.getElementById("envelope");
+const openLetterButton = document.getElementById("openLetter");
+
+let letterOpened = false;
+
+openLetterButton.addEventListener("click", () => {
+    if (!letterOpened) {
+        envelope.classList.add("open");
+        letterOpened = true;
+        openLetterButton.textContent = "Read My Letter ❤️";
+
+        // Start music after the user's tap.
+        startMusic();
+    } else {
+        showScreen(1);
+    }
+});
+
+/* Letter -> surprise -> final message */
+
+document.getElementById("toSurprise").addEventListener("click", () => {
+    showScreen(2);
+});
+
+document.getElementById("revealButton").addEventListener("click", () => {
+    const message = document.getElementById("hiddenMessage");
+    const gift = document.getElementById("gift");
+
+    message.classList.add("show");
+    gift.classList.add("revealed");
+    gift.textContent = "💖";
+
+    document.getElementById("revealButton").textContent =
+        "Surprise Revealed! ❤️";
+
+    document.getElementById("revealButton").disabled = true;
+    burstHearts(22);
+});
+
+document.getElementById("toFinal").addEventListener("click", () => {
+    showScreen(3);
+    burstHearts(28);
+});
+
+document.getElementById("againButton").addEventListener("click", () => {
+    letterOpened = false;
+    envelope.classList.remove("open");
+
+    openLetterButton.textContent = "Open Your Letter 💌";
+
+    document.getElementById("hiddenMessage").classList.remove("show");
+    document.getElementById("gift").classList.remove("revealed");
+    document.getElementById("gift").textContent = "🎁";
+
+    document.getElementById("revealButton").disabled = false;
+    document.getElementById("revealButton").textContent =
+        "Tap to Reveal ❤️";
+
+    showScreen(0);
+});
+
+/* Floating hearts */
+
+const heartLayer = document.getElementById("heartLayer");
+
+function createHeart() {
+    const heart = document.createElement("span");
+    heart.className = "floating-heart";
+
+    const hearts = ["💗", "💕", "♡", "💖", "🌸", "❤️"];
+    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (14 + Math.random() * 19) + "px";
+    heart.style.animationDuration = (7 + Math.random() * 7) + "s";
+
+    heartLayer.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 15000);
+}
+
+setInterval(createHeart, 700);
+
+function burstHearts(count) {
+    for (let i = 0; i < count; i++) {
+        setTimeout(createHeart, i * 75);
+    }
+}
+
+/* Gentle background music using Web Audio API.
+   No external audio file is needed. */
+
+let audioContext = null;
+let musicTimer = null;
+let musicPlaying = false;
+let melodyIndex = 0;
+let masterGain = null;
+
+const musicButton = document.getElementById("musicButton");
+
+const melody = [
+    261.63, 329.63, 392.00, 329.63,
+    293.66, 349.23, 440.00, 349.23,
+    261.63, 329.63, 392.00, 523.25,
+    440.00, 392.00, 329.63, 293.66
+];
+
+function playNote(frequency, startTime, duration) {
+    if (!audioContext || !masterGain) return;
+
+    const oscillator = audioContext.createOscillator();
+    const noteGain = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(frequency, startTime);
+
+    noteGain.gain.setValueAtTime(0.0001, startTime);
+    noteGain.gain.exponentialRampToValueAtTime(0.055, startTime + 0.08);
+    noteGain.gain.exponentialRampToValueAtTime(
+        0.0001, startTime + duration
+    );
+
+    oscillator.connect(noteGain);
+    noteGain.connect(masterGain);
+
+    oscillator.start(startTime);
+    oscillator.stop(startTime + duration + 0.03);
+}
+
+function scheduleMelody() {
+    if (!musicPlaying || !audioContext) return;
+
+    const now = audioContext.currentTime;
+    const frequency = melody[melodyIndex % melody.length];
+
+    playNote(frequency, now, 0.65);
+
+    // A quiet harmony adds a softer background texture.
+    if (melodyIndex % 4 === 0) {
+        playNote(frequency / 2, now, 0.9);
+    }
+
+    melodyIndex++;
+}
+
+async function startMusic() {
+    try {
+        if (!audioContext) {
+            const AudioContextClass =
+                window.AudioContext || window.webkitAudioContext;
+
+            if (!AudioContextClass) {
+                musicButton.textContent = "♫ Music unavailable";
+                return;
+            }
+
+            audioContext = new AudioContextClass();
+            masterGain = audioContext.createGain();
+            masterGain.gain.value = 0.45;
+            masterGain.connect(audioContext.destination);
+        }
+
+        await audioContext.resume();
+
+        if (musicPlaying) return;
+
+        musicPlaying = true;
+        scheduleMelody();
+
+        musicTimer = setInterval(scheduleMelody, 700);
+
+        musicButton.textContent = "♫ Music: On";
+        musicButton.setAttribute("aria-pressed", "true");
+    } catch (error) {
+        musicButton.textContent = "♫ Tap to try music";
+    }
+}
+
+function stopMusic() {
+    musicPlaying = false;
+
+    if (musicTimer !== null) {
+        clearInterval(musicTimer);
+        musicTimer = null;
+    }
+
+    if (masterGain && audioContext) {
+        masterGain.gain.setTargetAtTime(
+            0.0001, audioContext.currentTime, 0.04
+        );
+    }
+
+    musicButton.textContent = "♫ Music: Off";
+    musicButton.setAttribute("aria-pressed", "false");
+}
+
+musicButton.addEventListener("click", async () => {
+    if (musicPlaying) {
+        stopMusic();
+    } else {
+        await startMusic();
+
+        if (musicPlaying && masterGain && audioContext) {
+            masterGain.gain.setTargetAtTime(
+                0.45, audioContext.currentTime, 0.08
+            );
+        }
+    }
+});
+
+/* Initial atmosphere */
+
+for (let i = 0; i < 9; i++) {
+    setTimeout(createHeart, i * 350);
+}
+</script>
+
+</body>
+</html>
